@@ -1,0 +1,25 @@
+{
+  "name": "readfile",
+  "version": "1.0.0",
+  "repository": "https://github.com/moonreplace/readfile.git",
+  "description": "",
+  "main": "read.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jasmine-node test/",
+    "server": "node start",
+    "client": "client"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  },
+  "dependencies": {
+    "dnode": "^1.2.1",
+    "level": "^1.3.0",
+    "levelplus": "0.0.5"
+  }
+}
