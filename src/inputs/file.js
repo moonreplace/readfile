@@ -9,7 +9,7 @@ var fs = require('fs');
 var dealing = require('./deal');
 
 // 要读取的文件的名称
-var fileName = process.cwd() + config.input.file.sourceFile;
+var fileName = config.input.file.sourceFile;
 var outputStream = new Stream();
 outputStream.readable = true;
 outputStream.writable = true;

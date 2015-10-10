@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jasmine-node test/",
     "server": "node start",
-    "client": "client"
+    "client": "node sendLogData"
   },
   "author": "",
   "license": "ISC",

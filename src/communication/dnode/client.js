@@ -13,7 +13,8 @@ var config = require('../../config');
  * @param {string} data
  */
 
-var datas = []; // 存一万条记录才发送
+// 存一万条记录才发送
+var datas = [];
 exports.send = function (data) {
     datas.push(data);
     if (datas.length >= config.perform.count) {

@@ -3,7 +3,7 @@
  * @author daihuiming(moonreplace@163.com)
  */
 
-var Stream = require('stream');
+var Processor = require('../processor');
 var util = require('util');
 var levelDb = require('../store/level');
 var config = require('../config');
@@ -16,7 +16,7 @@ var config = require('../config');
  */
 var PerformProcessor = function () {
 
-    Stream.call(this);
+    Processor.call(this);
 
     /**
      * 获得当前的url
@@ -31,20 +31,9 @@ var PerformProcessor = function () {
      * @type {RegExp}
      */
     this.timeRegExp = /\[(\S+).*\]/;
-
-    this.init();
 };
 
-util.inherits(PerformProcessor, Stream);
-
-/**
- * 一些init的事情
- */
-
-PerformProcessor.prototype.init = function () {
-    this.readable = true;
-    this.writable = true;
-};
+util.inherits(PerformProcessor, Processor);
 
 /**
  * 我们现在得到的是80%的中位置
@@ -169,13 +158,14 @@ PerformProcessor.prototype.process = function (data) {
         var mappedDbName = me.mapDbName(parsedData.da_act, parsedData);
 
         var db = levelDb.get(mappedDbName);
-        // me.insert(db, parsedData);
+        me.insert(db, parsedData);
 
-        var stream = db.createReadStream({});
+        // 测试的时候用来读取数据
+        /*var stream = db.createReadStream({});
         stream.on('data', function (data) {
             console.log(data.key);
             console.log(data.value);
-        });
+        });*/
     };
 
 };

@@ -10,7 +10,7 @@ var path = require('path');
  */
 exports.input = {
     file: {
-        sourceFile: '/test/access_log.txt',
+        sourceFile: '/home/movie/nginxlog/access.log',
         interval: 100 // 单位是ms
     },
     from: 'file' // 现在只有file这一种方式
@@ -21,8 +21,8 @@ exports.input = {
  */
 exports.server = {
     net: {
-        port: 5004,
-        host: '127.0.0.1'
+        port: 8012,
+        host: 'dev036.baidu.com'
     }
 };
 
