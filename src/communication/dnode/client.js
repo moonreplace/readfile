@@ -15,7 +15,7 @@ var config = require('../../config');
 // 存一万条记录才发送
 var datas = [];
 
-dnode.connect(config.server.net.host, config.server.net.port, function (remote, conn) {
+exports.dnode = dnode.connect(config.server.net.host, config.server.net.port, function (remote, conn) {
     exports.send = function (data) {
         datas.push(data);
 
@@ -30,5 +30,3 @@ dnode.connect(config.server.net.host, config.server.net.port, function (remote, 
         conn.end();
     });
 });
-
-exports.dnode = dnode;
