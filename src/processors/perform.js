@@ -74,7 +74,9 @@ PerformProcessor.prototype.rejectKey = function (obj) {
     var rejectedKeys = config.filter.exceptKeys;
 
     rejectedKeys.forEach(function (key) {
-        delete obj[key];
+        if (obj && obj[key]) {
+            delete obj[key];
+        }
     });
 }
 
@@ -152,15 +154,19 @@ PerformProcessor.prototype.process = function (data) {
         // 根据规则我们把得到的数据解析成一个object
         var parsedData = me.parseUrl(data[i]);
 
-        // 去除掉不需要的key
-        me.rejectKey(parsedData);
-        // 产生不同的数据库
-        var mappedDbName = me.mapDbName(parsedData.da_act, parsedData);
+        if (parsedData) {
+            // 去除掉不需要的key
+            me.rejectKey(parsedData);
+            // 产生不同的数据库
+            var mappedDbName = me.mapDbName(parsedData.da_act, parsedData);
 
-        var db = levelDb.get(mappedDbName);
-        me.insert(db, parsedData);
+            var db = levelDb.get(mappedDbName);
+            me.insert(db, parsedData);
+        }
+        else {
+            console.log(data[i]);
+        }
 
-        // 测试的时候用来读取数据
         /*var stream = db.createReadStream({});
         stream.on('data', function (data) {
             console.log(data.key);

@@ -60,7 +60,8 @@ exports.filter = {
     // 排除掉不参与产生key的字段
     filterKeys: [
         'da_elapsed',
-        'da_ver'
+        'da_ver',
+        'xpath'
 
     ],
     // mapKeys
