@@ -22,7 +22,13 @@ var server = net.createServer(function (client) {
             cb(); // 返回给客户端的信息值
         }
     });
-    client.pipe(d).pipe(client);
+
+    try {
+        client.pipe(d).pipe(client);
+    }
+    catch (ex) {
+        console.log(ex);
+    }
 
     d.on('error', function (err) {
         console.log(err);

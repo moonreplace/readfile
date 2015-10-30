@@ -11,7 +11,7 @@ var path = require('path');
 exports.input = {
     file: {
         sourceFile: '/home/movie/nginxlog/access.log',
-        interval: 100 // 单位是ms
+        interval: 1000 // 单位是ms
     },
     from: 'file' // 现在只有file这一种方式
 };
@@ -30,7 +30,7 @@ exports.server = {
  * 一次发送的多少条记录，隔多久得一次配置文件
  */
 exports.perform = {
-    count: 50
+    count: 500
 };
 
 /**

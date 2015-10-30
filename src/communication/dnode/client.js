@@ -4,7 +4,6 @@
  */
 
 var dnode = require('dnode');
-var net = require('net');
 var config = require('../../config');
 
 /**
@@ -15,17 +14,21 @@ var config = require('../../config');
 
 // 存一万条记录才发送
 var datas = [];
-exports.send = function (data) {
-    datas.push(data);
-    if (datas.length >= config.perform.count) {
-        (function (datas) {
-            dnode.connect(config.server.net.host, config.server.net.port, function (remote, conn) {
-                remote.save(datas, function (msg) {
-                    conn.end();
-                });
-            });
-        }) (datas);
-        datas = [];
-    }
-};
 
+dnode.connect(config.server.net.host, config.server.net.port, function (remote, conn) {
+    exports.send = function (data) {
+        datas.push(data);
+
+        if (datas.length >= config.perform.count) {
+            remote.save(datas);
+            datas = [];
+        }
+    };
+
+    dnode.on('error', function (err) {
+        console.log(err);
+        conn.end();
+    });
+});
+
+exports.dnode = dnode;
