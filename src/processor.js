@@ -15,6 +15,6 @@ var Processor = function () {
     this.writable = true;
 };
 
-util.inherits(PerformProcessor, Stream);
+util.inherits(Processor, Stream);
 
 module.exports = Processor;
