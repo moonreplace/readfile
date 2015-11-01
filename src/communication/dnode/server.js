@@ -19,7 +19,7 @@ var server = net.createServer(function (client) {
          */
         save : function (data, cb) {
             performProcessor.process(data);
-            cb(); // 返回给客户端的信息值
+            cb && cb(); // 返回给客户端的信息值
         }
     });
 

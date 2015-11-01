@@ -154,7 +154,7 @@ PerformProcessor.prototype.process = function (data) {
         // 根据规则我们把得到的数据解析成一个object
         var parsedData = me.parseUrl(data[i]);
 
-        if (parsedData) {
+        if (parsedData && parsedData.da_act) {
             // 去除掉不需要的key
             me.rejectKey(parsedData);
             // 产生不同的数据库
