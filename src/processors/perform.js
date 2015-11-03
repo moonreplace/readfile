@@ -121,11 +121,16 @@ PerformProcessor.prototype.generateKey = function (obj) {
         // time不参与key的产生
         if (key !== 'time') {
             // 排除掉不参与产生的key
-            if (config.filter && config.filter.filterKeys && config.filter.filterKeys.indexOf(key) === -1) {
+            if (config.filter && config.filter.filterKeys && config.filter.filterKeys.indexOf(key) > -1) {
                 values.push(obj[key]);
             }
         }
     });
+
+    if (obj.time) {
+        var time = obj.time;
+        values.push([obj.time.getHours(), obj.time.getMinutes()].join('-'));
+    }
 
     return values.join(config.db.keySep);
 };

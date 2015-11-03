@@ -60,16 +60,13 @@ exports.filter = {
         'da_trd'
     ],
 
-    // 排除掉不参与产生key的字段
+    // 参与产生key的字段
     filterKeys: [
-        'da_elapsed',
-        'da_ver',
-        'xpath',
-        'da_abtest',
+        'da_src',
         'da_act',
-        'da_thirdpar',
-        'uid'
+        'da_os'
     ],
+
     // mapKeys
     mapDaAct: {
         BNJSReady: 'perform',
