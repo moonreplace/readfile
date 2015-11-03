@@ -2,7 +2,7 @@
  * @file level.js, 对level进行另外的封装以适应我们的需求
  * @author daihuiming(moonreplace@163.com)
  */
-var level = require('level');
+var level = require('level-party');
 var levelplus = require('levelplus');
 var config = require('../config');
 var path = require('path');

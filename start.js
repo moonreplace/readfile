@@ -1,4 +1,6 @@
-var server = require('./src/communication/dnode/server');
+var dnodeServer = require('./src/communication/dnode/server');
+var webServer = require('./src/communication/web/server');
 
 // 启动server
-server.start();
+dnodeServer.start();
+webServer.start();

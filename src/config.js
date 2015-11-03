@@ -23,6 +23,9 @@ exports.server = {
     net: {
         port: 8012,
         host: 'dev036.baidu.com'
+    },
+    web: {
+        port: 8013
     }
 };
 

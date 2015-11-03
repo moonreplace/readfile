@@ -9,8 +9,8 @@
   },
   "scripts": {
     "test": "jasmine-node test/",
-    "server": "node start",
-    "client": "node sendLogData"
+    "server": "node --max_old_space_size=800 start",
+    "client": "node --max_old_space_size=800 sendLogData"
   },
   "author": "",
   "license": "ISC",
@@ -19,7 +19,8 @@
   },
   "dependencies": {
     "dnode": "^1.2.1",
-    "level": "^1.3.0",
-    "levelplus": "0.0.5"
+    "level-party": "^2.1.2",
+    "levelplus": "0.0.5",
+    "socket.io": "^1.3.7"
   }
 }
