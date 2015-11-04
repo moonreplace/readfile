@@ -63,7 +63,6 @@ exports.filter = {
     // 参与产生key的字段
     filterKeys: [
         'da_src',
-        'da_act',
         'da_os'
     ],
 

@@ -114,16 +114,12 @@ PerformProcessor.prototype.mapDbName = function (name, data) {
 
 PerformProcessor.prototype.generateKey = function (obj) {
     // 遍历当前的object，取得所有的值来最终生成key
-    var values = [];
     // 对perform相关的选项进行特殊处理
     var values = [];
-    Object.keys(obj).forEach(function (key) {
-        // time不参与key的产生
-        if (key !== 'time') {
-            // 排除掉不参与产生的key
-            if (config.filter && config.filter.filterKeys && config.filter.filterKeys.indexOf(key) > -1) {
-                values.push(obj[key]);
-            }
+
+    config.filter.filterKeys.forEach(function (key) {
+        if (obj[key]) {
+            values.push(obj[key]);
         }
     });
 
