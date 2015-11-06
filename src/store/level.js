@@ -28,6 +28,7 @@ module.exports = {
             var dbPath = path.join(config.db.basePath, name); // 得到当前数据库的path
 
             var db = level(dbPath, dbConfig); // 产生level database
+            console.log(db);
             this.dbs[name] = this.plus(db); // 加上一些特殊的方法
         }
         return this.dbs[name];

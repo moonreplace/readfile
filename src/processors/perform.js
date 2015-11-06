@@ -5,7 +5,6 @@
 
 var Processor = require('../processor');
 var util = require('util');
-var levelDb = require('../store/level');
 var config = require('../config');
 
 /**
@@ -14,9 +13,11 @@ var config = require('../config');
  * @constructor
  * @extends {Stream}
  */
-var PerformProcessor = function () {
+var PerformProcessor = function (level) {
 
     Processor.call(this);
+
+    this.levelDb = level;
 
     /**
      * 获得当前的url
@@ -150,19 +151,21 @@ PerformProcessor.prototype.insert = function (db, obj) {
  */
 PerformProcessor.prototype.process = function (data) {
     var me = this;
+    var dealedDatas = [];
 
     for (var i = data.length - 1; i >= 0; i--) {
         // 根据规则我们把得到的数据解析成一个object
         var parsedData = me.parseUrl(data[i]);
 
         if (parsedData && parsedData.da_act) {
+            var temp = {};
             // 去除掉不需要的key
             me.rejectKey(parsedData);
             // 产生不同的数据库
             var mappedDbName = me.mapDbName(parsedData.da_act, parsedData);
-
-            var db = levelDb.get(mappedDbName);
-            me.insert(db, parsedData);
+            temp.dbName = mappedDbName;
+            temp.data = {key: me.generateKey(parsedData), value: parsedData};
+            dealedDatas.push(temp);
         }
         else {
             console.log(data[i]);
@@ -174,6 +177,8 @@ PerformProcessor.prototype.process = function (data) {
             console.log(data.value);
         });*/
     };
+
+    process.send(dealedDatas);
 
 };
 

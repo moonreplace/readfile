@@ -8,7 +8,8 @@ var net = require('net');
 var config = require('../../config');
 var PerformProcessor = require('../../processors/perform');
 
-var performProcessor = new PerformProcessor();
+exports.start = function (level) {
+var performProcessor = new PerformProcessor(level);
 var server = net.createServer(function (client) {
     var d = dnode({
         /**
@@ -35,7 +36,6 @@ var server = net.createServer(function (client) {
     });
 });
 
-exports.start = function () {
     server.listen(config.server.net.port);
     console.log('server start');
 };
