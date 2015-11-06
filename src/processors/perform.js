@@ -158,27 +158,26 @@ PerformProcessor.prototype.process = function (data) {
         var parsedData = me.parseUrl(data[i]);
 
         if (parsedData && parsedData.da_act) {
+            // 临时变量
             var temp = {};
             // 去除掉不需要的key
             me.rejectKey(parsedData);
             // 产生不同的数据库
             var mappedDbName = me.mapDbName(parsedData.da_act, parsedData);
-            temp.dbName = mappedDbName;
-            temp.data = {key: me.generateKey(parsedData), value: parsedData};
+
+            if (!temp[mappedDbName]) {
+                temp[mappedDbName] = [];
+            }
+
+            temp[mappedDbName].push({key: me.generateKey(parsedData), value: parsedData});
             dealedDatas.push(temp);
         }
         else {
             console.log(data[i]);
         }
-
-        /*var stream = db.createReadStream({});
-        stream.on('data', function (data) {
-            console.log(data.key);
-            console.log(data.value);
-        });*/
     };
 
-    process.send(dealedDatas);
+    process.send(config.message.net, dealedDatas);
 
 };
 

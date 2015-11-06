@@ -78,3 +78,11 @@ exports.filter = {
         api: 'perform'
     }
 };
+
+/**
+ * 用到的消息类型
+ */
+exports.message = {
+    net: 'NET',
+    web: 'WEB'
+};
