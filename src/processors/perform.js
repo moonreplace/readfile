@@ -98,7 +98,7 @@ PerformProcessor.prototype.mapDbName = function (name, data) {
     if (data.time) {
         var time = data.time;
         // 只是得到date
-        var date = appUtil.getFormateDay();
+        var date = appUtil.getFormatDay();
 
         // 最后把time放入进来
         dbName = [dbName, date].join('-')
@@ -127,7 +127,7 @@ PerformProcessor.prototype.generateKey = function (obj) {
 
     if (obj.time) {
         var time = obj.time;
-        values.push(appUtil.getFormateTime(time));
+        values.push(appUtil.getFormatTime(time));
     }
 
     return values.join(config.db.keySep);

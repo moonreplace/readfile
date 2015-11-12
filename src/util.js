@@ -45,7 +45,7 @@ exports.util = {
 
     },
 
-    getFormateDay: function () {
+    getFormatDay: function () {
         return this.getFormatDate(true, true, true);
     },
 
