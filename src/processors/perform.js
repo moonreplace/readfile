@@ -5,6 +5,7 @@
 
 var Processor = require('../processor');
 var util = require('util');
+var appUtil = require('../util');
 var config = require('../config');
 
 /**
@@ -97,7 +98,7 @@ PerformProcessor.prototype.mapDbName = function (name, data) {
     if (data.time) {
         var time = data.time;
         // 只是得到date
-        var date = [time.getFullYear(), time.getMonth() + 1, time.getDate()].join('-');
+        var date = appUtil.getFormateDay();
 
         // 最后把time放入进来
         dbName = [dbName, date].join('-')
@@ -126,7 +127,7 @@ PerformProcessor.prototype.generateKey = function (obj) {
 
     if (obj.time) {
         var time = obj.time;
-        values.push([obj.time.getHours(), obj.time.getMinutes()].join('-'));
+        values.push(appUtil.getFormateTime(time));
     }
 
     return values.join(config.db.keySep);

@@ -4,15 +4,53 @@
  */
 
 exports.util = {
-    /**
-     * 在当前的content上来应用regEx
-     *
-     * @param {string} content，要应用的content
-     * @param {RegExp} regExp, 要应用的正则表达式
-     * @return {Array}
-     */
-    searchContent: function (content, regExp) {
-        return regeEx.exec(content);
+
+    getFormatDate: function (needYear, needMonth,needDay, needHour, needMinute, sep, date) {
+
+        var result = [];
+        var time = date || new Date();
+
+        sep = sep || '-';
+
+        if (needYear) {
+            result.push(time.getFullYear());
+        }
+
+        if (needMonth) {
+            result.push(time.getMonth() + 1);
+        }
+
+        if (needDay) {
+            result.push(time.getDate());
+        }
+
+        if (needHour) {
+            result.push(time.getHours());
+        }
+
+        if (needMinute) {
+            result.push(time.getMinutes());
+        }
+
+        // 给个位数的加上0
+        result = result.map(function (key) {
+            if (key < 10) {
+                key = '0' + k;ey
+            }
+
+            return key;
+        });
+
+        return result.join('-');
+
+    },
+
+    getFormateDay: function () {
+        return this.getFormatDate(true, true, true);
+    },
+
+    getFormatTime: function (date) {
+        return this.getFormatDate(false, false, false, true, true, '-', date);
     }
 
 

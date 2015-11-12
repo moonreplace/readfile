@@ -7,6 +7,7 @@ module.exports = Cache;
 
 var _ = require('lodash');
 var util = require('util');
+var appUtil = require('../util');
 
 function Cache() {
 
@@ -58,23 +59,26 @@ Cache.prototype.get = function (key) {
     var current = new Date(Date.now() - me._maxMinute * 60 * 1000);
 
     var currentMonth = current.getMonth() + 1;
+    if (currentMonth < 10) {
+        currentMonth = '0' + currentMonth;
+    }
     var currentDay = current.getDate();
     var currentMinute = current.getMinutes();
     var currentHour = current.getHours();
 
-    var timeKey = [currentHour, currentMinute].join('-');
+    var timeKey = appUtil.getFormatTime(current);
 
     // 到第二天的时候，把前面的数据库关掉
-    if (currentHour === 0 && currentMinute > me._maxMinute) {
-        var dateKey = [currentMonth, currentDay].join('-');
-        Object.keys(me._items).forEach(function (subKey) {
-            if (subKey.indexOf(dateKey) > -1) {
-                result[subKey] = _.clone(me._items[subKey], true);
+    // if (currentHour === 0 && currentMinute > me._maxMinute) {
+    //     var dateKey = [currentMonth, currentDay].join('-');
+    //     Object.keys(me._items).forEach(function (subKey) {
+    //         if (subKey.indexOf(dateKey) > -1) {
+    //             result[subKey] = _.clone(me._items[subKey], true);
 
-                delete me._items[subKey];
-            }
-        });
-    }
+    //             delete me._items[subKey];
+    //         }
+    //     });
+    // }
 
     if (existItem) {
         Object.keys(existItem).forEach(function (subKey) {
