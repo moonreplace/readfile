@@ -3,7 +3,7 @@
  * @author daihuiming(moonreplace@163.com)
  */
 
-exports.util = {
+module.exports = {
 
     getFormatDate: function (needYear, needMonth,needDay, needHour, needMinute, sep, date) {
 
