@@ -53,5 +53,19 @@ module.exports = {
      */
     plus: function (db) {
         return levelplus(db);
+    },
+
+    /**
+     * 关掉数据库
+     *
+     * @param {string} dbName 要关掉的数据库的名称
+     *
+     */
+
+    close: function (dbName) {
+        if (this.dbs[dbName]) {
+            this.dbs[dbName].close();
+            delete this.dbs[dbName];
+        }
     }
 };

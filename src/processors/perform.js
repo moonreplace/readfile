@@ -151,7 +151,7 @@ PerformProcessor.prototype.insert = function (db, obj) {
  */
 PerformProcessor.prototype.process = function (data) {
     var me = this;
-    var dealedDatas = [];
+    var dealedDatas = {};
 
     for (var i = data.length - 1; i >= 0; i--) {
         // 根据规则我们把得到的数据解析成一个object
@@ -159,25 +159,28 @@ PerformProcessor.prototype.process = function (data) {
 
         if (parsedData && parsedData.da_act) {
             // 临时变量
-            var temp = {};
+            var temp = dealedDatas;
             // 去除掉不需要的key
             me.rejectKey(parsedData);
             // 产生不同的数据库
             var mappedDbName = me.mapDbName(parsedData.da_act, parsedData);
 
             if (!temp[mappedDbName]) {
-                temp[mappedDbName] = [];
+                temp[mappedDbName] = {};
             }
 
-            temp[mappedDbName].push({key: me.generateKey(parsedData), value: parsedData});
-            dealedDatas.push(temp);
+            if (!temp[mappedDbName][me.generateKey(parsedData)]) {
+                temp[mappedDbName][me.generateKey(parsedData)] = [];
+            }
+
+            temp[mappedDbName][me.generateKey(parsedData)].push(parsedData);
         }
         else {
             console.log(data[i]);
         }
     };
 
-    process.send(config.message.net, dealedDatas);
+    process.send({type: config.message.net, data: dealedDatas});
 
 };
 
