@@ -4,9 +4,13 @@ var config = require('./src/config');
 var Cache = require('./src/store/cache');
 var util = require('util');
 
+var memWatch = require('./tools/memwatch');
+
 var cluster = require('cluster');
 var numCPUs = 2;
 var cache = Cache();
+
+memWatch();
 
 if (cluster.isMaster) {
 

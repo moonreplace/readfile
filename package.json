@@ -15,7 +15,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "jasmine-node": "^1.14.5"
+    "heapdump": "^0.3.7",
+    "jasmine-node": "^1.14.5",
+    "memwatch-next": "^0.2.10"
   },
   "dependencies": {
     "dnode": "^1.2.1",
