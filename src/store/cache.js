@@ -15,7 +15,7 @@ function Cache() {
         return new Cache();
     }
 
-    this._items = {};
+    this.items = {};
 
     this._maxMinute = 2;
 };
@@ -28,19 +28,19 @@ function Cache() {
  */
 Cache.prototype.add = function (key, item) {
 
-    if (!this._items[key]) {
-        this._items[key] = item;
+    if (!this.items[key]) {
+        this.items[key] = item;
     }
     else {
         var me = this;
 
         Object.keys(item).forEach(function (subKey) {
             // 如果当前已经有值存在，
-            if (me._items[key][subKey]) {
-                me._items[key][subKey] = me._items[key][subKey].concat(item[subKey]);
+            if (me.items[key][subKey]) {
+                me.items[key][subKey] = me.items[key][subKey].concat(item[subKey]);
             }
             else {
-                me._items[key][subKey] = item[subKey];
+                me.items[key][subKey] = item[subKey];
             }
         });
     }
@@ -54,7 +54,7 @@ Cache.prototype.get = function (key) {
     result[key] = {};
     var me = this;
 
-    var existItem = me._items[key];
+    var existItem = me.items[key];
 
     var current = new Date(Date.now() - me._maxMinute * 60 * 1000);
 
@@ -71,11 +71,11 @@ Cache.prototype.get = function (key) {
     // 到第二天的时候，把前面的数据库关掉
     // if (currentHour === 0 && currentMinute > me._maxMinute) {
     //     var dateKey = [currentMonth, currentDay].join('-');
-    //     Object.keys(me._items).forEach(function (subKey) {
+    //     Object.keys(me.items).forEach(function (subKey) {
     //         if (subKey.indexOf(dateKey) > -1) {
-    //             result[subKey] = _.clone(me._items[subKey], true);
+    //             result[subKey] = _.clone(me.items[subKey], true);
 
-    //             delete me._items[subKey];
+    //             delete me.items[subKey];
     //         }
     //     });
     // }

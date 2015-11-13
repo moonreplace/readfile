@@ -31,7 +31,7 @@ if (cluster.isMaster) {
                     cache.add(dbName, data[dbName]);
                 });
 
-                Object.keys(data).forEach(function (dbName) {
+                Object.keys(cache.items).forEach(function (dbName) {
                     var cachedData = cache.get(dbName);
                     // 打开数据库
                     var db = leveldb.get(dbName);
