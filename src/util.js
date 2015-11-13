@@ -3,7 +3,7 @@
  * @author daihuiming(moonreplace@163.com)
  */
 
-exports.util = {
+module.exports = {
 
     getFormatDate: function (needYear, needMonth,needDay, needHour, needMinute, sep, date) {
 
@@ -35,7 +35,7 @@ exports.util = {
         // 给个位数的加上0
         result = result.map(function (key) {
             if (key < 10) {
-                key = '0' + k;ey
+                key = '0' + key;
             }
 
             return key;
