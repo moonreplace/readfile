@@ -35,7 +35,7 @@ module.exports = {
         // 给个位数的加上0
         result = result.map(function (key) {
             if (key < 10) {
-                key = '0' + k;ey
+                key = '0' + key;
             }
 
             return key;
