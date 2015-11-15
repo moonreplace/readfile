@@ -43,6 +43,9 @@ if (cluster.isMaster) {
                         }
                     });
 
+                    // 把当前的临时存储的数据去掉
+                    cachedData = null;
+
                 });
 
                 // 当关闭数据库的逻辑

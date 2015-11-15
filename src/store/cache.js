@@ -68,27 +68,18 @@ Cache.prototype.get = function (key) {
 
     var timeKey = appUtil.getFormatTime(current);
 
-    // 到第二天的时候，把前面的数据库关掉
-    // if (currentHour === 0 && currentMinute > me._maxMinute) {
-    //     var dateKey = [currentMonth, currentDay].join('-');
-    //     Object.keys(me.items).forEach(function (subKey) {
-    //         if (subKey.indexOf(dateKey) > -1) {
-    //             result[subKey] = _.clone(me.items[subKey], true);
+    // 当发现是前一天的数据的时候，做相应的处理
 
-    //             delete me.items[subKey];
-    //         }
-    //     });
-    // }
 
-    if (existItem) {
+    if (existItem && Object.keys(existItem).length) {
         Object.keys(existItem).forEach(function (subKey) {
-    
+
             var parts = subKey.split('/');
 
             if (parts && parts[2]) {
                 if (parts[2] <= timeKey) {
                     result[key][subKey] = existItem[subKey];
-                    delete existItem[subKey];    
+                    delete existItem[subKey];
                 }
             }
         });
