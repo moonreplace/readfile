@@ -82,9 +82,14 @@ Cache.prototype.get = function (key) {
 
     if (existItem) {
         Object.keys(existItem).forEach(function (subKey) {
-            if (subKey.indexOf(timeKey) > -1) {
-                result[key][subKey] = _.clone(existItem[subKey], true);
-                delete existItem[subKey];
+    
+            var parts = subKey.split('/');
+
+            if (parts && parts[2]) {
+                if (parts[2] <= timeKey) {
+                    result[key][subKey] = existItem[subKey];
+                    delete existItem[subKey];    
+                }
             }
         });
     }
