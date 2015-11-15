@@ -1,0 +1,25 @@
+util.puts: Use console.log instead
+node-router server instance at http://*:8014/
+{ domain: null,
+  _events: { open: { [Function: g] listener: [Function] } },
+  _maxListeners: Infinity,
+  options: 
+   { createIfMissing: true,
+     errorIfExists: false,
+     keyEncoding: 'utf8',
+     valueEncoding: 'json',
+     compression: true,
+     retry: true,
+     db: [Function] },
+  _codec: 
+   { encodeKey: [Function: encodeKey],
+     encodeValue: [Function: encodeValue],
+     isValueAsBuffer: [Function: isValueAsBuffer],
+     isKeyAsBuffer: [Function: isKeyAsBuffer],
+     decodeValue: [Function: decodeValue],
+     decodeKey: [Function: decodeKey] },
+  _status: 'opening',
+  location: 'no-location',
+  db: { location: 'no-location', _db: undefined, _operations: [] },
+  connect: [Function],
+  createRpcStream: [Function] }

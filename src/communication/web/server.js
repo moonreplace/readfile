@@ -6,7 +6,7 @@ var nodeRouter = require('./node-router');
 var app = nodeRouter.getServer();
 var config = require('../../config');
 var levelDb = require('../../store/level');
-var router = require('./router')
+var router = require('./router');
 
 exports.start = function () {
 
@@ -18,3 +18,5 @@ exports.start = function () {
 
     app.listen(config.server.web.port);
 };
+
+exports.start();

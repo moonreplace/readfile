@@ -5,19 +5,20 @@
 var glob = require('glob');
 var path = require('path');
 
-glob('**/*.js', {cwd: __dirname}, function (err, files) {
+var files = glob.sync('**/*.js', {cwd: __dirname});
 
-    files.forEach(function (file) {
-        var pathName = path.dirname(file);
-        var fileName = path.basename(file, '.js');
+files.forEach(function (file) {
+    var pathName = path.dirname(file);
+    var fileName = path.basename(file, '.js');
 
-        if (pathName !== '.') {
-            module.exports[pathName] = require(['.', path.join(pathName,fileName)].join(path.sep));
+    if (pathName !== '.') {
+        module.exports[pathName] = require(['.', path.join(pathName,fileName)].join(path.sep));
+    }
+    else {
+        if (fileName !== 'index') {
+            module.exports[fileName] = require(['.', fileName].join(path.sep));
         }
-        else {
-            if (fileName !== 'index') {
-                module.exports[fileName] = require(['.', fileName].join(path.sep));
-            }
-        }
-    });
+    }
+
 });
+

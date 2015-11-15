@@ -1,3 +1,5 @@
+var levelDb = require('../../../../store/level');
+
 module.exports = function (req, res, page, time) {
     // 得到当前的数据库名
     var dbName = ['ready', time].join('-');
@@ -15,7 +17,7 @@ module.exports = function (req, res, page, time) {
         lte: String.fromCharCode(page.charCodeAt(0) + 1)
     };
 
-    db.createReadStream()
+    db.createReadStream(filter)
         .on('data', function (data) {
             var temp = {};
             temp[data.key] = data.value.length;

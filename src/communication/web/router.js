@@ -12,6 +12,7 @@ var handlers = require('./handlers');
 
 module.exports = function (app) {
 
+    console.log(handlers);
     // 获得页面的pv
     app.get(/^\/api\/pv\/(.+?)\/(.+?)$/, handlers.pv);
 };
