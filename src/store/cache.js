@@ -70,7 +70,6 @@ Cache.prototype.get = function (key) {
 
     // 当发现是前一天的数据的时候，做相应的处理
 
-
     if (existItem && Object.keys(existItem).length) {
         Object.keys(existItem).forEach(function (subKey) {
 
@@ -79,9 +78,10 @@ Cache.prototype.get = function (key) {
             if (parts && parts[2]) {
                 if (parts[2] <= timeKey) {
                     result[key][subKey] = existItem[subKey];
-                    delete existItem[subKey];
                 }
             }
+
+            delete existItem[subKey];
         });
     }
 

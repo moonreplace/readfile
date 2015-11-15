@@ -183,6 +183,8 @@ PerformProcessor.prototype.process = function (data) {
 
     process.send({type: config.message.net, data: dealedDatas});
 
+    dealedDatas = null;
+
 };
 
 /**

@@ -2,13 +2,17 @@
  * @file router.js 用来定制各种router的配置文件
  * @author daihuiming(moonreplace@baidu.com)
  */
+var handlers = require('./handlers');
 
-module.exports = [
-    {
-        type: 'get',
-        router: /^\/api\/pv\/(.+?)\/(.+?)$/,
-        handler: function () {
+/**
+ * 把app都挂上相应的handler
+ *
+ * @param {Object} app 当前的server对象
+ */
 
-        }
-    }
-];
+module.exports = function (app) {
+
+    app.get(/^\/api\/pv\/(.+?)\/(.+?)$/, function (req, res, page, time) {
+
+    });
+};
