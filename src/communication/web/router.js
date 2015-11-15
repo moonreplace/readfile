@@ -12,7 +12,6 @@ var handlers = require('./handlers');
 
 module.exports = function (app) {
 
-    app.get(/^\/api\/pv\/(.+?)\/(.+?)$/, function (req, res, page, time) {
-
-    });
+    // 获得页面的pv
+    app.get(/^\/api\/pv\/(.+?)\/(.+?)$/, handlers.pv);
 };

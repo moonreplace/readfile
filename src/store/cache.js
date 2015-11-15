@@ -78,10 +78,13 @@ Cache.prototype.get = function (key) {
             if (parts && parts[2]) {
                 if (parts[2] <= timeKey) {
                     result[key][subKey] = existItem[subKey];
+                    delete existItem[subKey];
                 }
             }
+            else {
+                delete existItem[subKey];
+            }
 
-            delete existItem[subKey];
         });
     }
 
