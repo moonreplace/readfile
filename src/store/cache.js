@@ -87,6 +87,9 @@ Cache.prototype.get = function (key) {
 
         });
     }
+    else {
+        delete me.items[key];
+    }
 
     return result;
 };
