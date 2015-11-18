@@ -14,7 +14,7 @@ exports.start = function () {
 
     // 静态文件
     app.get(/^\/assets\/(.+)/, nodeRouter.staticDirHandler('public/'));
-
+    app.get(/^\/html\/(.+)/, nodeRouter.staticDirHandler('public/'));
 
     app.listen(config.server.web.port);
 };

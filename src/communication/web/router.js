@@ -15,7 +15,4 @@ module.exports = function (app) {
     // 获得页面的pv
     app.get(/^\/api\/pv\/(.+?)\/(.+?)$/, handlers.pv);
 
-    // 静态文件
-    app.get(/^\/assets\/(.+)/, nodeRouter.staticDirHandler('public/'));
-    app.get(/^\/html\/(.+)/, nodeRouter.staticDirHandler('public/'));
 };

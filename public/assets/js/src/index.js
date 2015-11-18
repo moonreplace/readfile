@@ -1,6 +1,8 @@
 define(function (require) {
 
-
+    $.get('/api/pv/portal/2015-11-18', function (data) {
+        console.log(data);
+    });
 
     var option = {
         title : {
