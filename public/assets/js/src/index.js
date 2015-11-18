@@ -1,10 +1,29 @@
 define(function (require) {
 
     $.get('/api/pv/portal/2015-11-18', function (data) {
+
+        var keys = [];
+
+        var androids = [];
+
+        var ios = [];
+
+        data.Android.forEach(function (dataObj) {
+            Object.keys(dataObj).forEach(function (key) {
+                keys.push(key.split('/')[2]);
+                androids.push(dataObj[key]);
+            });
+        });
+
+        data.ios.forEach(function (dataObj) {
+            Object.keys(dataObj).forEach(function (key) {
+                ios.push(dataObj[key]);
+            });
+        });
+
         var option = {
             title : {
-                text: '未来一周气温变化',
-                subtext: '纯属虚构'
+                text: '首页的PV'
             },
             tooltip : {
                 trigger: 'axis'
@@ -27,7 +46,7 @@ define(function (require) {
                 {
                     type : 'category',
                     boundaryGap : false,
-                    data : ['周一','周二','周三','周四','周五','周六','周日']
+                    data : keys
                 }
             ],
             yAxis : [
@@ -42,7 +61,7 @@ define(function (require) {
                 {
                     name:'Android',
                     type:'line',
-                    data: data.Android,
+                    data: androids,
                     markPoint : {
                         data : [
                             {type : 'max', name: '最大值'},
@@ -58,7 +77,7 @@ define(function (require) {
                 {
                     name:'IOS',
                     type:'line',
-                    data: data.ios,
+                    data: ios,
                     markPoint : {
                         data : [
                             {type : 'max', name: '最大值'},
