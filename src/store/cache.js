@@ -40,7 +40,7 @@ Cache.prototype.add = function (key, item) {
                 me.items[key][subKey] = me.items[key][subKey].concat(item[subKey]);
             }
             else {
-                me.items[key][subKey] = item[subKey];
+                me.items[key][subKey] = item[subKey] || [];
             }
         });
     }
@@ -56,36 +56,27 @@ Cache.prototype.get = function (key) {
 
     var existItem = me.items[key];
 
-    var current = new Date(Date.now() - me._maxMinute * 60 * 1000);
+    // 延迟2分钟
+    var before = Date.now() - me._maxMinute * 60 * 1000;
 
-    var currentMonth = current.getMonth() + 1;
-    if (currentMonth < 10) {
-        currentMonth = '0' + currentMonth;
-    }
-    var currentDay = current.getDate();
-    var currentMinute = current.getMinutes();
-    var currentHour = current.getHours();
-
-    var timeKey = appUtil.getFormatTime(current);
-
-    // 当发现是前一天的数据的时候，做相应的处理
-
+    // 如果发现有数据就进行处理，如果发现整个单项缓存都没有数据了就关掉
     if (existItem && Object.keys(existItem).length) {
         Object.keys(existItem).forEach(function (subKey) {
 
-            var parts = subKey.split('/');
+            var currentValue = existItem.subKey;
 
-            if (parts && parts[2]) {
-                if (parts[2] <= timeKey) {
-                    result[key][subKey] = existItem[subKey];
+            // 如果有值了我们就进行比较，我们能容忍的误差在5分钟以内，否则删除，不然会内存泄露
+            if (currentValue.now) {
+                // 如果已经超过2分钟了，我们就认为可以了
+                if (currentValue.now >= before) {
+                    result[key][subKey] = currentValue;
                     delete existItem[subKey];
                 }
             }
             else {
-                delete existItem[subKey];
+                existItem.subKey.now = Date.now();
             }
-
-        });
+        }
     }
     else {
         delete me.items[key];
