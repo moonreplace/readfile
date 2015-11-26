@@ -35,6 +35,9 @@ module.exports = {
             this.dbs[name] = db; // 加上一些特殊的方法
             this.dbs[name].now = Date.now();
         }
+        else {
+            this.dbs[name].now = Date.now();
+        }
 
         // 去掉长时间未用的数据库
         Object.keys(this.dbs).forEach(function (dbName) {
