@@ -9,6 +9,8 @@ var path = require('path');
 
 module.exports = {
 
+    _maxTime: 5,
+
     /**
      * 用来缓存当前的所有产生的dbs, 以数据库的name做为key
      *
@@ -23,14 +25,23 @@ module.exports = {
      * @return {Object}
      */
     get: function (name, dbConfig) {
+        var me = this;
+        // 设立一个缓存时间，如果发现一个数据库长时间未用，我们就把它关闭
         dbConfig = dbConfig || {keyEncoding: 'utf8', valueEncoding: 'json'};
         if (!this.dbs[name]) {
             var dbPath = path.join(config.db.basePath, name); // 得到当前数据库的path
 
             var db = level(dbPath, dbConfig); // 产生level database
-            console.log(db);
-            this.dbs[name] = this.plus(db); // 加上一些特殊的方法
+            this.dbs[name] = db; // 加上一些特殊的方法
+            this.dbs[name].now = Date.now();
         }
+
+        // 去掉长时间未用的数据库
+        Object.keys(this.dbs).forEach(function (dbName) {
+            if (me.dbs[dbName].now < Date.now() - me._maxTime * 60 * 1000) {
+                me.close(dbName);
+            }
+        });
         return this.dbs[name];
     },
 
