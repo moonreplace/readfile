@@ -87,7 +87,7 @@ Cache.prototype.get = function (key) {
                     if (currentValue) {
                         if (currentValue.now) {
                             // 如果已经超过5分钟了，我们就认为可以了
-                            if (currentValue.now >= Date.now()) {
+                            if (currentValue.now <= Date.now()) {
                                 result[key][subKey] = currentValue; // 这部分数据暂不纳入监控
                                 delete existItem[subKey];
                             }
