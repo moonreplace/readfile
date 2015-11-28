@@ -47,21 +47,6 @@ if (cluster.isMaster) {
                     cachedData = null;
 
                 });
-
-                // 当关闭数据库的逻辑
-                // 先写死4分钟，以后再改
-                var current = new Date();
-                if (current.getHours() === 0 && current.getMinutes() === 4) {
-                    Object.keys(leveldb.dbs).forEach(function (dbName) {
-                        var dbDateStr = dbName.slice(dbName.indexOf('-') + 1);
-
-                        var dbDate = new Date(dbDateStr + ' 00:00:00');
-
-                        if ((current - 24 * 60 * 60 * 1000) > dbDate) {
-                            leveldb.close(dbName);
-                        }
-                    });
-                }
             }
 
         });
@@ -69,12 +54,18 @@ if (cluster.isMaster) {
 
     cluster.on('exit', function(worker, code, signal) {
         console.log('worker ' + worker.process.pid + ' died');
+        cluster.fork();
     });
 } else {
     // Workers can share any TCP connection
     // In this case it is an HTTP server
     // 启动server
-    dnodeServer.start(leveldb);
+    dnodeServer.start();
+
+    process.on('uncaughtException', function(){
+        //Send some notification about the error
+        process.exit(1);
+    }
 }
 
 

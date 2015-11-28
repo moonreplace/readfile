@@ -9,7 +9,7 @@ var path = require('path');
 
 module.exports = {
 
-    _maxTime: 5,
+    _maxTime: 2,
 
     /**
      * 用来缓存当前的所有产生的dbs, 以数据库的name做为key
@@ -42,6 +42,7 @@ module.exports = {
         // 去掉长时间未用的数据库
         Object.keys(this.dbs).forEach(function (dbName) {
             if (me.dbs[dbName].now < Date.now() - me._maxTime * 60 * 1000) {
+                console.log('close db:' + dbName);
                 me.close(dbName);
             }
         });

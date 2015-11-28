@@ -14,11 +14,9 @@ var config = require('../config');
  * @constructor
  * @extends {Stream}
  */
-var PerformProcessor = function (level) {
+var PerformProcessor = function () {
 
     Processor.call(this);
-
-    this.levelDb = level;
 
     /**
      * 获得当前的url

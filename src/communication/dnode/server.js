@@ -8,8 +8,8 @@ var net = require('net');
 var config = require('../../config');
 var PerformProcessor = require('../../processors/perform');
 
-exports.start = function (level) {
-var performProcessor = new PerformProcessor(level);
+exports.start = function () {
+var performProcessor = new PerformProcessor();
 var server = net.createServer(function (client) {
     var d = dnode({
         /**

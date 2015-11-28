@@ -27,7 +27,7 @@ var dnode = dnode.connect(config.server.net.host, config.server.net.port, functi
 
     dnode.on('error', function (err) {
         console.log(err);
-        conn.end();
+        // conn.end();
     });
 });
 

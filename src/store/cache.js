@@ -68,7 +68,7 @@ Cache.prototype.get = function (key) {
     var timeKey = appUtil.getFormatTime(current);
 
     // 延迟5分钟
-    var after = Date.now() + 5 * 60 * 1000;
+    var after = Date.now() + 3 * 60 * 1000;
 
     // 如果发现有数据就进行处理，如果发现整个单项缓存都没有数据了就关掉
     if (existItem && Object.keys(existItem).length) {
@@ -88,7 +88,8 @@ Cache.prototype.get = function (key) {
                         if (currentValue.now) {
                             // 如果已经超过5分钟了，我们就认为可以了
                             if (currentValue.now <= Date.now()) {
-                                result[key][subKey] = currentValue; // 这部分数据暂不纳入监控
+                                // result[key][subKey] = currentValue; // 这部分数据暂不纳入监控
+                                console.log('error: Not timed ' + subKey);
                                 delete existItem[subKey];
                             }
                         }
