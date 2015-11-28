@@ -11,7 +11,7 @@ var path = require('path');
 exports.input = {
     file: {
         sourceFile: '/home/movie/nginxlog/access.log',
-        interval: 200 // 单位是ms
+        interval: 1000 // 单位是ms
     },
     from: 'file' // 现在只有file这一种方式
 };
