@@ -38,7 +38,13 @@ if (cluster.isMaster) {
                     // 对当前的数据库中的记录进行处理
                     Object.keys(cachedData[dbName]).forEach(function (key) {
                         if (cachedData[dbName][key]) {
-                            db.put(key, cachedData[dbName][key]);
+                            // 原来的数据库中有记录
+                            var existContent = db.get(key);
+                            if (existContent) {
+                                existContent.concat(cachedData[dbName][key]);
+                            }
+
+                            db.put(key, existContent);
                         }
                     });
 

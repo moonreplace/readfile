@@ -5,7 +5,7 @@
 
 module.exports = {
 
-    getFormatDate: function (needYear, needMonth,needDay, needHour, needMinute, sep, date) {
+    getFormatDate: function (date, needYear, needMonth,needDay, needHour, needMinute, sep) {
 
         var result = [];
         var time = date || new Date();
@@ -45,12 +45,12 @@ module.exports = {
 
     },
 
-    getFormatDay: function () {
-        return this.getFormatDate(true, true, true);
+    getFormatDay: function (date) {
+        return this.getFormatDate(date, true, true, true);
     },
 
     getFormatTime: function (date) {
-        return this.getFormatDate(false, false, false, true, true, '-', date);
+        return this.getFormatDate(date, false, false, false, true, true, '-');
     }
 
 

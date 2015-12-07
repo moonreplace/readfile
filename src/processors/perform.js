@@ -96,7 +96,7 @@ PerformProcessor.prototype.mapDbName = function (name, data) {
     if (data.time) {
         var time = data.time;
         // 只是得到date
-        var date = appUtil.getFormatDay();
+        var date = appUtil.getFormatDay(time);
 
         // 最后把time放入进来
         dbName = [dbName, date].join('-')
