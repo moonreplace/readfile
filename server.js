@@ -10,25 +10,80 @@ var levelDb = require('./src/store/level');
 exports.start = function () {
 
     //api 数据
-    app.get(/^\/api\/pv\/(.+?)\/(.+?)$/, function (req, res, page, time) {
-        // 得到当前的数据库名
-        var dbName = ['ready', time].join('-');
+    app.get(/^\/api\/(.+?)\/(.+?)\/(.+?)$/, function (req, res, item, page, time) {
 
-        var a = {
-            // gte: [page, 'ios', '00-00'].join('-'),
-            gte: page,
-            lte: 's'
-        };
+        var dbPrefix = '';
+
+        switch (item) {
+            case 'pv':
+                dbPrefix = 'ready';
+                break;
+            case 'perform':
+                dbPrefix = 'perform';
+                break;
+            default:
+                dbPrefix = item;
+        }
+        // 得到当前的数据库名
+        var dbName = [dbPrefix, time].join('-');
+        console.log(dbName);
+
+        var a = {};
+        
+        if (page !== 'all') {
+            a = {
+                // gte: [page, 'ios', '00-00'].join('-'),
+                gte: page,
+                lte: String.fromCharCode(page.charCodeAt(0) + 1)
+            };
+        }
 
         var db = levelDb.get(dbName);
 
         var result = [];
 
-        db.createReadStream(a)
-            .on('data', function (data) {
-                var temp = {};
-                temp[data.key] = data.value.length;
-                result.push(temp);
+        var dbStream = db.createReadStream(a);
+        //dbStream.pipe(res);
+            dbStream.on('data', function (data) {
+                var tempValue = {};
+
+                if (dbPrefix === 'perform') {
+                    var temp = {};
+                    data.value.forEach(function (item) {
+                        if (item.da_act === 'perform' && item.da_attr) {
+                            if (!temp[item.da_attr]) {
+                                temp[item.da_attr] = [];
+                                temp[item.da_attr].push(item);
+                            }
+                            else {
+                                temp[item.da_attr].push(item);
+                            }
+                        }
+                    });
+
+                    Object.keys(temp).forEach(function (key) {
+                        temp[key].sort(function (a, b) {
+                            return a.da_elapsed > b.da_elapsed;
+                        });
+
+                        // 取80%的中位数
+                        var length = temp[key].length;
+                        var index = Math.floor(length * 0.8);
+                        temp[key] = temp[key][index] || {};                        
+                        temp[key].length = length;
+                    });
+                    tempValue[data.key] = temp;
+                } else {
+
+                    if (dbPrefix === 'error') {
+                       tempValue[data.key] = data.value; 
+                    }
+                    else {
+                        tempValue[data.key] = data.value.length;
+                    }
+                }
+
+                result.push(tempValue);
             })
             .on('error', function (err) {
                 console.log('Oh my!', err)
@@ -38,15 +93,11 @@ exports.start = function () {
             })
             .on('end', function () {
 
-                var data =
-
                 res.simpleJson(200, result);
 
                 console.log('Stream closed')
             });
     });
-
-    //
 
     // 静态文件
     app.get(/^\/assets\/(.+)/, nodeRouter.staticDirHandler('public/'));

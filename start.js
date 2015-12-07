@@ -1,5 +1,4 @@
 var dnodeServer = require('./src/communication/dnode/server');
-var webServer = require('./src/communication/web/server');
 var config = require('./src/config');
 var Cache = require('./src/store/cache');
 var util = require('util');
@@ -62,10 +61,10 @@ if (cluster.isMaster) {
     // 启动server
     dnodeServer.start();
 
-    process.on('uncaughtException', function(){
+    process.on('uncaughtException', function (){
         //Send some notification about the error
         process.exit(1);
-    }
+    });
 }
 
 

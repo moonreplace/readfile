@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "jasmine-node test/",
-    "server": "node --max_old_space_size=800 start",
+    "server": "node --max_old_space_size=1600 start",
     "client": "node --max_old_space_size=800 sendLogData"
   },
   "author": "",
