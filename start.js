@@ -39,18 +39,20 @@ if (cluster.isMaster) {
                     Object.keys(cachedData[dbName]).forEach(function (key) {
                         if (cachedData[dbName][key]) {
                             // 原来的数据库中有记录
-                            var existContent = db.get(key);
-                            if (existContent) {
-                                existContent.concat(cachedData[dbName][key]);
-                            }
+                            db.get(key, function (err, data) {
+                                if (data) {
+                                    data.concat(cachedData[dbName][key]);
+                                }
+                                else {
+                                    data = cachedData[dbName][key];
+                                }
 
-                            db.put(key, existContent);
+                                db.put(key, data);
+
+                                cachedData[dbName].delete(key);
+                            });
                         }
                     });
-
-                    // 把当前的临时存储的数据去掉
-                    cachedData = null;
-
                 });
             }
 

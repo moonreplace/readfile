@@ -18,6 +18,9 @@ exports.start = function () {
             case 'pv':
                 dbPrefix = 'ready';
                 break;
+            case 'click':
+                dbPrefix = 'click';
+                break;
             case 'perform':
                 dbPrefix = 'perform';
                 break;
@@ -26,12 +29,10 @@ exports.start = function () {
         }
         // 得到当前的数据库名
         var dbName = [dbPrefix, time].join('-');
-        console.log(dbName);
-
-        var a = {};
+        var filter = {};
         
         if (page !== 'all') {
-            a = {
+            filter = {
                 // gte: [page, 'ios', '00-00'].join('-'),
                 gte: page,
                 lte: String.fromCharCode(page.charCodeAt(0) + 1)
@@ -42,7 +43,10 @@ exports.start = function () {
 
         var result = [];
 
-        var dbStream = db.createReadStream(a);
+        var dbStream = db.createReadStream(filter);
+
+        res.writeHead(200, {"Content-Type": "application/json"}); 
+        res.write('[');
         //dbStream.pipe(res);
             dbStream.on('data', function (data) {
                 var tempValue = {};
@@ -76,14 +80,15 @@ exports.start = function () {
                 } else {
 
                     if (dbPrefix === 'error') {
-                       tempValue[data.key] = data.value; 
+                        tempValue[data.key] = data.value; 
                     }
                     else {
                         tempValue[data.key] = data.value.length;
                     }
                 }
 
-                result.push(tempValue);
+                res.write(JSON.stringify(tempValue));
+
             })
             .on('error', function (err) {
                 console.log('Oh my!', err)
@@ -93,8 +98,7 @@ exports.start = function () {
             })
             .on('end', function () {
 
-                res.simpleJson(200, result);
-
+                res.end(']');
                 console.log('Stream closed')
             });
     });
